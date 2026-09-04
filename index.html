@@ -13,12 +13,12 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #f4f6f8;
-      color: #222;
+      background: #f4f7f5;
+      color: #17231b;
     }
 
     header {
-      background: #1f7a45;
+      background: #176b3a;
       color: white;
       text-align: center;
       padding: 45px 20px;
@@ -26,95 +26,101 @@
 
     header h1 {
       margin: 0 0 10px;
-      font-size: 42px;
+      font-size: 38px;
     }
 
     header p {
-      font-size: 18px;
       margin: 0;
+      font-size: 18px;
     }
 
-    section {
-      max-width: 1000px;
-      margin: 40px auto;
-      padding: 0 20px;
+    .container {
+      max-width: 950px;
+      margin: auto;
+      padding: 25px 15px;
     }
 
     h2 {
       text-align: center;
-      font-size: 30px;
-      margin-bottom: 25px;
+      margin-top: 35px;
     }
 
     .services {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 15px;
     }
 
     .card {
       background: white;
-      padding: 25px;
+      padding: 22px;
       border-radius: 15px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-      text-align: center;
+      box-shadow: 0 3px 12px rgba(0,0,0,.08);
     }
 
     .card h3 {
       margin-top: 0;
-      color: #1f7a45;
+      color: #176b3a;
     }
 
     .price {
       font-size: 20px;
       font-weight: bold;
-      margin-top: 15px;
     }
 
     .booking {
       background: white;
-      padding: 30px;
+      padding: 25px;
       border-radius: 15px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      margin-top: 30px;
+      box-shadow: 0 3px 12px rgba(0,0,0,.08);
     }
 
     label {
       display: block;
       margin-top: 15px;
-      margin-bottom: 6px;
       font-weight: bold;
     }
 
-    input, select, textarea {
+    input, select, textarea, button {
       width: 100%;
       padding: 12px;
-      border: 1px solid #ccc;
+      margin-top: 6px;
       border-radius: 8px;
+      border: 1px solid #ccc;
       font-size: 16px;
     }
 
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
     button {
-      width: 100%;
       margin-top: 20px;
-      padding: 14px;
-      background: #1f7a45;
+      background: #176b3a;
       color: white;
       border: none;
-      border-radius: 8px;
-      font-size: 17px;
+      font-weight: bold;
       cursor: pointer;
     }
 
     button:hover {
-      background: #155b33;
+      background: #0f512b;
+    }
+
+    .notice {
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 8px;
+      background: #e7f5ec;
+      display: none;
     }
 
     footer {
-      background: #222;
-      color: white;
       text-align: center;
-      padding: 25px;
-      margin-top: 50px;
+      padding: 30px;
+      color: #666;
     }
   </style>
 </head>
@@ -126,82 +132,113 @@
   <p>Pomoc s prací kolem domu a zahrady</p>
 </header>
 
-<section>
-  <h2>Moje služby</h2>
+<div class="container">
+
+  <h2>Co nabízím</h2>
 
   <div class="services">
 
     <div class="card">
       <h3>🪟 Mytí oken</h3>
-      <p>Čistá okna bez starostí.</p>
+      <p>Pomoc s umytím oken a jejich základním vyčištěním.</p>
       <div class="price">od 100 Kč</div>
     </div>
 
     <div class="card">
-      <h3>🌳 Sekání zahrady</h3>
-      <p>Posekám trávu a upravím zahradu.</p>
+      <h3>🌱 Sekání zahrady</h3>
+      <p>Sekání trávy a základní úklid po práci.</p>
       <div class="price">od 150 Kč</div>
     </div>
 
     <div class="card">
       <h3>🪵 Práce se dřevem</h3>
-      <p>Skládání, přenášení a příprava dřeva.</p>
+      <p>Skládání a rovnání dřeva.</p>
       <div class="price">od 150 Kč</div>
     </div>
 
     <div class="card">
-      <h3>🏡 Další práce</h3>
-      <p>Po domluvě zvládnu i další jednoduché práce.</p>
+      <h3>🏡 Další pomoc</h3>
+      <p>Po domluvě můžu pomoci i s dalšími jednoduchými pracemi.</p>
       <div class="price">dle domluvy</div>
     </div>
 
   </div>
-</section>
 
-<section>
-  <h2>Objednat práci</h2>
+  <h2>Objednat termín</h2>
 
   <div class="booking">
 
-    <label for="name">Jméno</label>
-    <input type="text" id="name" placeholder="Vaše jméno">
+    <form id="bookingForm">
 
-    <label for="service">Služba</label>
-    <select id="service">
-      <option>Mytí oken</option>
-      <option>Sekání zahrady</option>
-      <option>Práce se dřevem</option>
-      <option>Jiná práce</option>
-    </select>
+      <label for="name">Jméno</label>
+      <input type="text" id="name" required>
 
-    <label for="date">Datum</label>
-    <input type="date" id="date">
+      <label for="phone">Telefon nebo e-mail</label>
+      <input type="text" id="phone" required>
 
-    <label for="time">Čas</label>
-    <select id="time">
-      <option>09:00</option>
-      <option>10:00</option>
-      <option>11:00</option>
-      <option>13:00</option>
-      <option>14:00</option>
-      <option>15:00</option>
-      <option>16:00</option>
-      <option>17:00</option>
-    </select>
+      <label for="service">Služba</label>
+      <select id="service" required>
+        <option value="">Vyber službu</option>
+        <option>Mytí oken</option>
+        <option>Sekání zahrady</option>
+        <option>Práce se dřevem</option>
+        <option>Jiná práce</option>
+      </select>
 
-    <label for="message">Poznámka</label>
-    <textarea id="message" rows="4" placeholder="Napište případné podrobnosti..."></textarea>
+      <label for="date">Datum</label>
+      <input type="date" id="date" required>
 
-    <button onclick="alert('Rezervace bude brzy napojena na zprávy.')">
-      Objednat práci
-    </button>
+      <label for="time">Čas</label>
+      <select id="time" required>
+        <option value="">Vyber čas</option>
+        <option>8:00</option>
+        <option>9:00</option>
+        <option>10:00</option>
+        <option>11:00</option>
+        <option>13:00</option>
+        <option>14:00</option>
+        <option>15:00</option>
+        <option>16:00</option>
+        <option>17:00</option>
+        <option>18:00</option>
+      </select>
+
+      <label for="message">Poznámka</label>
+      <textarea id="message" placeholder="Napiš například co přesně potřebuješ..."></textarea>
+
+      <button type="submit">Odeslat objednávku</button>
+
+    </form>
+
+    <div class="notice" id="notice">
+      ✅ Objednávka byla připravena k odeslání.
+    </div>
 
   </div>
-</section>
+
+</div>
 
 <footer>
   © 2026 Domácí práce
 </footer>
+
+<script>
+  const form = document.getElementById("bookingForm");
+  const notice = document.getElementById("notice");
+
+  form.addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    notice.style.display = "block";
+
+    form.reset();
+
+    window.scrollTo({
+      top: document.body.scrollHeight,
+      behavior: "smooth"
+    });
+  });
+</script>
 
 </body>
 </html>
