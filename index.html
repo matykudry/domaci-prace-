@@ -1,21 +1,207 @@
 <!DOCTYPE html>
-
 <html lang="cs">
-
 <head>
-
   <meta charset="UTF-8">
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Domácí práce</title>
 
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      color: #222;
+    }
+
+    header {
+      background: #1f7a45;
+      color: white;
+      text-align: center;
+      padding: 45px 20px;
+    }
+
+    header h1 {
+      margin: 0 0 10px;
+      font-size: 42px;
+    }
+
+    header p {
+      font-size: 18px;
+      margin: 0;
+    }
+
+    section {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 30px;
+      margin-bottom: 25px;
+    }
+
+    .services {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      text-align: center;
+    }
+
+    .card h3 {
+      margin-top: 0;
+      color: #1f7a45;
+    }
+
+    .price {
+      font-size: 20px;
+      font-weight: bold;
+      margin-top: 15px;
+    }
+
+    .booking {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 20px;
+      padding: 14px;
+      background: #1f7a45;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 17px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #155b33;
+    }
+
+    footer {
+      background: #222;
+      color: white;
+      text-align: center;
+      padding: 25px;
+      margin-top: 50px;
+    }
+  </style>
 </head>
 
 <body>
 
+<header>
   <h1>Domácí práce</h1>
+  <p>Pomoc s prací kolem domu a zahrady</p>
+</header>
 
-  <p>Umývání oken, sekání zahrady, práce se dřevem a další pomoc.</p>
+<section>
+  <h2>Moje služby</h2>
+
+  <div class="services">
+
+    <div class="card">
+      <h3>🪟 Mytí oken</h3>
+      <p>Čistá okna bez starostí.</p>
+      <div class="price">od 100 Kč</div>
+    </div>
+
+    <div class="card">
+      <h3>🌳 Sekání zahrady</h3>
+      <p>Posekám trávu a upravím zahradu.</p>
+      <div class="price">od 150 Kč</div>
+    </div>
+
+    <div class="card">
+      <h3>🪵 Práce se dřevem</h3>
+      <p>Skládání, přenášení a příprava dřeva.</p>
+      <div class="price">od 150 Kč</div>
+    </div>
+
+    <div class="card">
+      <h3>🏡 Další práce</h3>
+      <p>Po domluvě zvládnu i další jednoduché práce.</p>
+      <div class="price">dle domluvy</div>
+    </div>
+
+  </div>
+</section>
+
+<section>
+  <h2>Objednat práci</h2>
+
+  <div class="booking">
+
+    <label for="name">Jméno</label>
+    <input type="text" id="name" placeholder="Vaše jméno">
+
+    <label for="service">Služba</label>
+    <select id="service">
+      <option>Mytí oken</option>
+      <option>Sekání zahrady</option>
+      <option>Práce se dřevem</option>
+      <option>Jiná práce</option>
+    </select>
+
+    <label for="date">Datum</label>
+    <input type="date" id="date">
+
+    <label for="time">Čas</label>
+    <select id="time">
+      <option>09:00</option>
+      <option>10:00</option>
+      <option>11:00</option>
+      <option>13:00</option>
+      <option>14:00</option>
+      <option>15:00</option>
+      <option>16:00</option>
+      <option>17:00</option>
+    </select>
+
+    <label for="message">Poznámka</label>
+    <textarea id="message" rows="4" placeholder="Napište případné podrobnosti..."></textarea>
+
+    <button onclick="alert('Rezervace bude brzy napojena na zprávy.')">
+      Objednat práci
+    </button>
+
+  </div>
+</section>
+
+<footer>
+  © 2026 Domácí práce
+</footer>
 
 </body>
-
-</html
+</html>
