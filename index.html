@@ -1,128 +1,119 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Domácí práce</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Domácí práce</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<style>
+* { box-sizing: border-box; }
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f4f7f5;
-      color: #17231b;
-    }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f7f5;
+  color: #17231b;
+}
 
-    header {
-      background: #176b3a;
-      color: white;
-      text-align: center;
-      padding: 45px 20px;
-    }
+header {
+  background: #176b3a;
+  color: white;
+  text-align: center;
+  padding: 45px 20px;
+}
 
-    header h1 {
-      margin: 0 0 10px;
-      font-size: 38px;
-    }
+header h1 {
+  margin: 0 0 10px;
+  font-size: 38px;
+}
 
-    header p {
-      margin: 0;
-      font-size: 18px;
-    }
+.container {
+  max-width: 950px;
+  margin: auto;
+  padding: 25px 15px;
+}
 
-    .container {
-      max-width: 950px;
-      margin: auto;
-      padding: 25px 15px;
-    }
+h2 {
+  text-align: center;
+  margin-top: 35px;
+}
 
-    h2 {
-      text-align: center;
-      margin-top: 35px;
-    }
+.services {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 15px;
+}
 
-    .services {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-      gap: 15px;
-    }
+.card {
+  background: white;
+  padding: 22px;
+  border-radius: 15px;
+  box-shadow: 0 3px 12px rgba(0,0,0,.08);
+}
 
-    .card {
-      background: white;
-      padding: 22px;
-      border-radius: 15px;
-      box-shadow: 0 3px 12px rgba(0,0,0,.08);
-    }
+.card h3 {
+  margin-top: 0;
+  color: #176b3a;
+}
 
-    .card h3 {
-      margin-top: 0;
-      color: #176b3a;
-    }
+.price {
+  font-size: 20px;
+  font-weight: bold;
+}
 
-    .price {
-      font-size: 20px;
-      font-weight: bold;
-    }
+.booking {
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+  margin-top: 30px;
+  box-shadow: 0 3px 12px rgba(0,0,0,.08);
+}
 
-    .booking {
-      background: white;
-      padding: 25px;
-      border-radius: 15px;
-      margin-top: 30px;
-      box-shadow: 0 3px 12px rgba(0,0,0,.08);
-    }
+label {
+  display: block;
+  margin-top: 15px;
+  font-weight: bold;
+}
 
-    label {
-      display: block;
-      margin-top: 15px;
-      font-weight: bold;
-    }
+input, select, textarea, button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 6px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
 
-    input, select, textarea, button {
-      width: 100%;
-      padding: 12px;
-      margin-top: 6px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      font-size: 16px;
-    }
+textarea {
+  min-height: 100px;
+}
 
-    textarea {
-      min-height: 100px;
-      resize: vertical;
-    }
+button {
+  margin-top: 20px;
+  background: #176b3a;
+  color: white;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+}
 
-    button {
-      margin-top: 20px;
-      background: #176b3a;
-      color: white;
-      border: none;
-      font-weight: bold;
-      cursor: pointer;
-    }
+button:hover {
+  background: #0f512b;
+}
 
-    button:hover {
-      background: #0f512b;
-    }
+.info {
+  margin-top: 15px;
+  padding: 12px;
+  background: #e7f5ec;
+  border-radius: 8px;
+}
 
-    .notice {
-      margin-top: 15px;
-      padding: 12px;
-      border-radius: 8px;
-      background: #e7f5ec;
-      display: none;
-    }
-
-    footer {
-      text-align: center;
-      padding: 30px;
-      color: #666;
-    }
-  </style>
+footer {
+  text-align: center;
+  padding: 30px;
+  color: #666;
+}
+</style>
 </head>
 
 <body>
@@ -134,110 +125,132 @@
 
 <div class="container">
 
-  <h2>Co nabízím</h2>
+<h2>Co nabízím</h2>
 
-  <div class="services">
+<div class="services">
 
-    <div class="card">
-      <h3>🪟 Mytí oken</h3>
-      <p>Pomoc s umytím oken a jejich základním vyčištěním.</p>
-      <div class="price">od 100 Kč</div>
-    </div>
+<div class="card">
+<h3>🪟 Mytí oken</h3>
+<p>Pomoc s umytím oken a základním vyčištěním.</p>
+<div class="price">od 100 Kč</div>
+</div>
 
-    <div class="card">
-      <h3>🌱 Sekání zahrady</h3>
-      <p>Sekání trávy a základní úklid po práci.</p>
-      <div class="price">od 150 Kč</div>
-    </div>
+<div class="card">
+<h3>🌱 Sekání zahrady</h3>
+<p>Sekání trávy a základní úklid po práci.</p>
+<div class="price">od 150 Kč</div>
+</div>
 
-    <div class="card">
-      <h3>🪵 Práce se dřevem</h3>
-      <p>Skládání a rovnání dřeva.</p>
-      <div class="price">od 150 Kč</div>
-    </div>
+<div class="card">
+<h3>🪵 Práce se dřevem</h3>
+<p>Skládání a rovnání dřeva.</p>
+<div class="price">od 150 Kč</div>
+</div>
 
-    <div class="card">
-      <h3>🏡 Další pomoc</h3>
-      <p>Po domluvě můžu pomoci i s dalšími jednoduchými pracemi.</p>
-      <div class="price">dle domluvy</div>
-    </div>
+<div class="card">
+<h3>🏡 Další pomoc</h3>
+<p>Po domluvě můžu pomoci i s dalšími jednoduchými pracemi.</p>
+<div class="price">dle domluvy</div>
+</div>
 
-  </div>
+</div>
 
-  <h2>Objednat termín</h2>
+<h2>📅 Rezervace termínu</h2>
 
-  <div class="booking">
+<div class="booking">
 
-    <form id="bookingForm">
+<form id="bookingForm">
 
-      <label for="name">Jméno</label>
-      <input type="text" id="name" required>
+<label for="name">Jméno</label>
+<input type="text" id="name" required>
 
-      <label for="phone">Telefon nebo e-mail</label>
-      <input type="text" id="phone" required>
+<label for="contact">Telefon nebo e-mail</label>
+<input type="text" id="contact" required>
 
-      <label for="service">Služba</label>
-      <select id="service" required>
-        <option value="">Vyber službu</option>
-        <option>Mytí oken</option>
-        <option>Sekání zahrady</option>
-        <option>Práce se dřevem</option>
-        <option>Jiná práce</option>
-      </select>
+<label for="service">Služba</label>
+<select id="service" required>
+<option value="">Vyber službu</option>
+<option>Mytí oken</option>
+<option>Sekání zahrady</option>
+<option>Práce se dřevem</option>
+<option>Jiná práce</option>
+</select>
 
-      <label for="date">Datum</label>
-      <input type="date" id="date" required>
+<label for="date">Datum</label>
+<input type="date" id="date" required>
 
-      <label for="time">Čas</label>
-      <select id="time" required>
-        <option value="">Vyber čas</option>
-        <option>8:00</option>
-        <option>9:00</option>
-        <option>10:00</option>
-        <option>11:00</option>
-        <option>13:00</option>
-        <option>14:00</option>
-        <option>15:00</option>
-        <option>16:00</option>
-        <option>17:00</option>
-        <option>18:00</option>
-      </select>
+<label for="time">Čas</label>
+<select id="time" required>
+<option value="">Nejdříve vyber datum</option>
+</select>
 
-      <label for="message">Poznámka</label>
-      <textarea id="message" placeholder="Napiš například co přesně potřebuješ..."></textarea>
+<label for="message">Poznámka</label>
+<textarea id="message" placeholder="Napiš, co potřebuješ..."></textarea>
 
-      <button type="submit">Odeslat objednávku</button>
+<button type="submit">Rezervovat termín</button>
 
-    </form>
+</form>
 
-    <div class="notice" id="notice">
-      ✅ Objednávka byla připravena k odeslání.
-    </div>
+<div class="info">
+<strong>🕐 Dostupné časy:</strong><br>
+Pondělí–pátek: 15:00–18:00<br>
+Sobota–neděle: 9:00–19:00
+</div>
 
-  </div>
+</div>
 
 </div>
 
 <footer>
-  © 2026 Domácí práce
+© 2026 Domácí práce
 </footer>
 
 <script>
-  const form = document.getElementById("bookingForm");
-  const notice = document.getElementById("notice");
 
-  form.addEventListener("submit", function(event) {
-    event.preventDefault();
+const dateInput = document.getElementById("date");
+const timeSelect = document.getElementById("time");
 
-    notice.style.display = "block";
+dateInput.min = new Date().toISOString().split("T")[0];
 
-    form.reset();
+dateInput.addEventListener("change", function() {
 
-    window.scrollTo({
-      top: document.body.scrollHeight,
-      behavior: "smooth"
-    });
+  timeSelect.innerHTML =
+    '<option value="">Vyber čas</option>';
+
+  const date = new Date(this.value + "T12:00:00");
+  const day = date.getDay();
+
+  let times = [];
+
+  if (day >= 1 && day <= 5) {
+    times = ["15:00", "16:00", "17:00", "18:00"];
+  } else {
+    times = [
+      "9:00", "10:00", "11:00", "12:00",
+      "13:00", "14:00", "15:00", "16:00",
+      "17:00", "18:00", "19:00"
+    ];
+  }
+
+  times.forEach(function(time) {
+    const option = document.createElement("option");
+    option.value = time;
+    option.textContent = time;
+    timeSelect.appendChild(option);
   });
+
+});
+
+document.getElementById("bookingForm").addEventListener("submit", function(event) {
+
+  event.preventDefault();
+
+  alert(
+    "Rezervace byla vyplněna. V dalším kroku ji napojíme na skutečný systém objednávek."
+  );
+
+});
+
 </script>
 
 </body>
