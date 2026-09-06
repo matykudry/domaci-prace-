@@ -217,7 +217,7 @@
 <script>
 
 const GOOGLE_SCRIPT_URL =
-"https://script.google.com/macros/s/AKfycbxH5V2CThh5yGRaj4bVJ2Z6NGklMvfauMKexcRysCeM-RggnIqyG9WlJ70WyrVo4VIapw/exec";
+"https://script.google.com/macros/s/AKfycbyw4MQTsK7A0uY-OHqkjq3nBfWdRGRJ5sbW2rI1ObfiHXGwc1AJCiXwfHfFwH_YcWZy/exec";
 
 const timeSelect = document.getElementById("time");
 const dateInput = document.getElementById("date");
@@ -287,7 +287,6 @@ async function reserve() {
       GOOGLE_SCRIPT_URL,
       {
         method: "POST",
-
         body: JSON.stringify({
           date: date,
           time: time,
@@ -308,9 +307,7 @@ async function reserve() {
         "✅ Rezervace byla úspěšně odeslána!<br><br>" +
         "<b>Práce:</b> " + service + "<br>" +
         "<b>Datum:</b> " + date + "<br>" +
-        "<b>Čas:</b> " + time + "<br>" +
-        "<b>Jméno:</b> " + name + "<br>" +
-        "<b>Adresa:</b> " + address;
+        "<b>Čas:</b> " + time;
 
       document.getElementById("service").value = "";
       document.getElementById("date").value = "";
@@ -323,8 +320,10 @@ async function reserve() {
 
     } else {
 
+      message.style.background = "#fee2e2";
+      message.style.color = "#991b1b";
       message.innerHTML =
-        "❌ Rezervaci se nepodařilo odeslat.";
+        "❌ Tento termín už je obsazený. Vyber prosím jiný čas.";
 
     }
 
