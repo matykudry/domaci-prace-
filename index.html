@@ -174,7 +174,6 @@
   <div class="booking">
 
     <label for="service">Vyberte práci:</label>
-
     <select id="service">
       <option value="">-- Vyberte práci --</option>
       <option>Sekání trávy</option>
@@ -185,26 +184,24 @@
     </select>
 
     <label for="date">Vyberte den:</label>
-
     <input type="date" id="date">
 
     <label for="time">Vyberte čas:</label>
-
     <select id="time">
       <option value="">-- Vyberte čas --</option>
     </select>
 
     <label for="name">Jméno:</label>
-
     <input type="text" id="name" placeholder="Vaše jméno">
 
     <label for="phone">Telefon:</label>
-
     <input type="tel" id="phone" placeholder="Telefonní číslo">
 
-    <label for="note">Poznámka:</label>
+    <label for="address">Adresa:</label>
+    <input type="text" id="address" placeholder="Ulice, číslo, město">
 
-    <textarea id="note" placeholder="Např. adresa nebo další informace"></textarea>
+    <label for="note">Poznámka:</label>
+    <textarea id="note" placeholder="Další informace"></textarea>
 
     <button onclick="reserve()">
       Rezervovat termín
@@ -227,15 +224,11 @@ const GOOGLE_SCRIPT_URL =
 const timeSelect = document.getElementById("time");
 const dateInput = document.getElementById("date");
 
-
-// Dnešní datum
 const today = new Date();
 const todayString = today.toISOString().split("T")[0];
 
 dateInput.min = todayString;
 
-
-// Vytvoření dostupných časů podle dne
 function createTimes() {
 
   timeSelect.innerHTML =
@@ -246,11 +239,9 @@ function createTimes() {
   const date = new Date(dateInput.value + "T12:00:00");
   const day = date.getDay();
 
-  // Pondělí až pátek
   let startHour = 15;
   let endHour = 18;
 
-  // Sobota a neděle
   if (day === 0 || day === 6) {
     startHour = 9;
     endHour = 18;
@@ -270,49 +261,29 @@ function createTimes() {
   }
 }
 
-
-// Po změně dne vytvoří časy
 dateInput.addEventListener("change", createTimes);
 
-
-// Odeslání rezervace
 async function reserve() {
 
-  const service =
-    document.getElementById("service").value;
+  const service = document.getElementById("service").value;
+  const date = document.getElementById("date").value;
+  const time = document.getElementById("time").value;
+  const name = document.getElementById("name").value;
+  const phone = document.getElementById("phone").value;
+  const address = document.getElementById("address").value;
+  const note = document.getElementById("note").value;
 
-  const date =
-    document.getElementById("date").value;
-
-  const time =
-    document.getElementById("time").value;
-
-  const name =
-    document.getElementById("name").value;
-
-  const phone =
-    document.getElementById("phone").value;
-
-  const note =
-    document.getElementById("note").value;
-
-
-  if (!service || !date || !time || !name || !phone) {
+  if (!service || !date || !time || !name || !phone || !address) {
 
     alert("Vyplň prosím všechna povinná políčka.");
 
     return;
   }
 
-
-  const message =
-    document.getElementById("message");
+  const message = document.getElementById("message");
 
   message.style.display = "block";
-
-  message.innerHTML =
-    "⏳ Odesílám rezervaci...";
-
+  message.innerHTML = "⏳ Odesílám rezervaci...";
 
   try {
 
@@ -328,41 +299,33 @@ async function reserve() {
           service: service,
           name: name,
           contact: phone,
+          address: address,
           note: note
 
         })
       }
     );
 
-
-    const result =
-      await response.json();
-
+    const result = await response.json();
 
     if (result.success) {
 
       message.innerHTML =
         "✅ Rezervace byla úspěšně odeslána!<br><br>" +
 
-        "<b>Práce:</b> " +
-        service + "<br>" +
+        "<b>Práce:</b> " + service + "<br>" +
+        "<b>Datum:</b> " + date + "<br>" +
+        "<b>Čas:</b> " + time + "<br>" +
+        "<b>Jméno:</b> " + name + "<br>" +
+        "<b>Adresa:</b> " + address;
 
-        "<b>Datum:</b> " +
-        date + "<br>" +
-
-        "<b>Čas:</b> " +
-        time + "<br>" +
-
-        "<b>Jméno:</b> " +
-        name;
-
-      // Vyčištění formuláře
       document.getElementById("service").value = "";
       document.getElementById("date").value = "";
       document.getElementById("time").innerHTML =
         '<option value="">-- Vyberte čas --</option>';
       document.getElementById("name").value = "";
       document.getElementById("phone").value = "";
+      document.getElementById("address").value = "";
       document.getElementById("note").value = "";
 
     } else {
@@ -378,9 +341,7 @@ async function reserve() {
       "❌ Nastala chyba při odesílání rezervace.";
 
     console.error(error);
-
   }
-
 }
 
 </script>
