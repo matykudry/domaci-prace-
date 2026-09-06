@@ -8,99 +8,32 @@
 <style>
 *{box-sizing:border-box}
 body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#172033}
-.hero{background:linear-gradient(135deg,#087cf0,#1557c0);color:white;text-align:center;padding:48px 18px}
+.hero{background:linear-gradient(135deg,#087cf0,#1557c0);color:#fff;text-align:center;padding:48px 18px}
 .hero h1{font-size:36px;margin:0 0 10px}
 .container{max-width:900px;margin:auto;padding:16px}
-.card{background:white;border-radius:18px;padding:24px;margin:16px 0;box-shadow:0 5px 20px #0001}
+.card{background:#fff;border-radius:18px;padding:24px;margin:16px 0;box-shadow:0 5px 20px #0001}
 h2{color:#1557c0}
 .price{display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid #eee}
 .price b{color:#087cf0}
-
-input,select{
-width:100%;padding:12px;border:1px solid #ccd5e2;
-border-radius:10px;margin:6px 0 12px;font-size:16px
-}
-
-.btn{
-border:0;border-radius:11px;padding:13px 18px;
-font-weight:bold;cursor:pointer
-}
-
-.order{background:#087cf0;color:white;width:100%;margin-top:15px}
+input,select{width:100%;padding:12px;border:1px solid #ccd5e2;border-radius:10px;margin:6px 0 12px;font-size:16px}
+.btn{border:0;border-radius:11px;padding:13px 18px;font-weight:bold;cursor:pointer}
+.order{background:#087cf0;color:#fff;width:100%;margin-top:15px}
 .phone{font-size:24px;font-weight:bold}
-.about{background:#087cf0;color:white;width:100%}
+.about{background:#087cf0;color:#fff;width:100%}
 .hidden{display:none}
+.notice{padding:12px;border-radius:10px;background:#fff7d6;margin-top:12px}
 
-.notice{
-padding:12px;border-radius:10px;
-background:#fff7d6;margin-top:12px
-}
+.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.weekday{text-align:center;font-size:12px;font-weight:bold;color:#6b7585;padding:6px 0}
+.day{min-height:48px;border:1px solid #d7deea;background:#fff;border-radius:10px;cursor:pointer;font-weight:bold}
+.day.empty{border:0;background:transparent;cursor:default}
+.day.closed{background:#f2f3f5;color:#999;cursor:not-allowed}
+.day.selected{background:#087cf0;color:#fff;border-color:#087cf0}
 
-.calendar{
-display:grid;
-grid-template-columns:repeat(7,1fr);
-gap:6px
-}
-
-.weekday{
-text-align:center;
-font-size:12px;
-font-weight:bold;
-color:#6b7585;
-padding:6px 0
-}
-
-.day{
-min-height:48px;
-border:1px solid #d7deea;
-background:white;
-border-radius:10px;
-cursor:pointer;
-font-weight:bold
-}
-
-.day.empty{
-border:0;
-background:transparent;
-cursor:default
-}
-
-.day.closed{
-background:#f2f3f5;
-color:#999;
-cursor:not-allowed
-}
-
-.day.selected{
-background:#087cf0;
-color:white;
-border-color:#087cf0
-}
-
-.time{
-padding:13px;
-margin:7px 0;
-border:1px solid #d7deea;
-border-radius:10px;
-text-align:center;
-font-weight:bold
-}
-
-.time.free{
-cursor:pointer
-}
-
-.time.selected{
-background:#087cf0;
-color:white;
-border-color:#087cf0
-}
-
-.time.taken{
-background:#eee;
-color:#888;
-cursor:not-allowed
-}
+.time{padding:13px;margin:7px 0;border:1px solid #d7deea;border-radius:10px;text-align:center;font-weight:bold}
+.time.free{cursor:pointer}
+.time.selected{background:#087cf0;color:#fff;border-color:#087cf0}
+.time.taken{background:#eee;color:#888;cursor:not-allowed}
 
 @media(max-width:600px){
 .calendar{gap:4px}
@@ -119,7 +52,6 @@ cursor:not-allowed
 
 <section class="card">
 <h2>🔨 Ceník</h2>
-
 <div class="price">🌱 Sekání trávy <b>100 Kč/hodinu</b></div>
 <div class="price">🪟 Mytí oken <b>50 Kč/hodinu</b></div>
 <div class="price">🪵 Sekání dřeva <b>150 Kč/hodinu</b></div>
@@ -129,12 +61,12 @@ cursor:not-allowed
 </section>
 
 <section class="card">
-
 <h2>📅 Objednat termín</h2>
 
 <p>
 <b>Pondělí–pátek:</b> 15:00–19:00<br>
-<b>Sobota–neděle:</b> 9:00–19:00
+<b>Sobota–neděle:</b> 9:00–19:00<br>
+Začátky prací jsou vždy v celou hodinu.
 </p>
 
 <label>Práce</label>
@@ -148,32 +80,24 @@ cursor:not-allowed
 <option>Ostatní práce</option>
 </select>
 
-<h3 id="monthTitle"></h3>
+<h3 id="month"></h3>
 
 <div class="calendar" id="calendar"></div>
 
-<div id="timeArea" class="hidden">
+<div id="timesBox"></div>
 
-<h3 id="selectedDayTitle"></h3>
-
-<div id="times"></div>
-
-</div>
-
-<div id="formArea" class="hidden">
-
-<h3>👤 Kontaktní údaje</h3>
+<div id="form" class="hidden">
 
 <label>Jméno</label>
-<input id="customerName" placeholder="Tvoje jméno">
+<input id="name" placeholder="Tvoje jméno">
 
 <label>Telefon</label>
-<input id="customerPhone" placeholder="Telefon">
+<input id="phone" type="tel" placeholder="Telefon">
 
 <label>Adresa</label>
-<input id="customerAddress" placeholder="Adresa">
+<input id="address" placeholder="Adresa, kde se práce provede">
 
-<button class="btn order" onclick="order()">
+<button class="btn order" onclick="book()">
 Objednat termín
 </button>
 
@@ -210,16 +134,13 @@ onclick="document.getElementById('about').classList.toggle('hidden')">
 
 <section id="about" class="card hidden">
 <h2>👤 Něco o mně</h2>
-
 <p>
 Jsem <b>14letý student</b>, který si chce přivydělat
 a zároveň pomoct lidem v okolí.
 </p>
-
 <p>
 Práci dělám <b>pečlivě, spolehlivě a podle domluvy</b>.
 </p>
-
 </section>
 
 </main>
@@ -234,7 +155,6 @@ const GOOGLE_SCRIPT_URL =
 "https://script.google.com/macros/s/AKfycby1GvCyeeTgGDBEPZlOpm1fEXBApwGMoWJybTYK4OQIaqQFZf3VOjsBYOFRAwvzi3pm5g/exec";
 
 let bookings = [];
-
 let viewDate = new Date();
 viewDate.setDate(1);
 
@@ -251,13 +171,83 @@ String(d.getDate()).padStart(2,"0");
 
 }
 
-async function loadBookings(){
 
-try{
+/* Převod data z Google Tabulky */
 
-const response = await fetch(GOOGLE_SCRIPT_URL);
+function normalizeBookingDate(value){
 
-bookings = await response.json();
+let text = String(value || "").trim();
+
+if(/^\d{4}-\d{2}-\d{2}$/.test(text)){
+return text;
+}
+
+if(text.includes("GMT")){
+
+let d = new Date(text);
+
+if(!isNaN(d.getTime())){
+return iso(d);
+}
+
+}
+
+let match = text.match(/(\d{4})-(\d{2})-(\d{2})/);
+
+if(match){
+return match[1]+"-"+match[2]+"-"+match[3];
+}
+
+return text.slice(0,10);
+
+}
+
+
+/* Převod času z Google Tabulky */
+
+function normalizeBookingTime(value){
+
+let text = String(value || "").trim();
+
+let match = text.match(/\b(\d{1,2}):(\d{2})/);
+
+if(match){
+
+return String(match[1]).padStart(2,"0")+":"+match[2];
+
+}
+
+if(text.includes("GMT")){
+
+let d = new Date(text);
+
+if(!isNaN(d.getTime())){
+
+return String(d.getHours()).padStart(2,"0")+":"+
+String(d.getMinutes()).padStart(2,"0");
+
+}
+
+}
+
+return text.slice(0,5);
+
+}
+
+
+/* Načtení objednávek */
+
+function loadBookings(){
+
+fetch(GOOGLE_SCRIPT_URL,{
+cache:"no-store"
+})
+
+.then(r=>r.json())
+
+.then(data=>{
+
+bookings = Array.isArray(data) ? data : [];
 
 renderCalendar();
 
@@ -265,46 +255,18 @@ if(selectedDate){
 renderTimes();
 }
 
-}catch(error){
+})
+
+.catch(error=>{
 
 console.error(error);
 
-}
+});
 
 }
 
-function getTimesForDate(){
 
-if(!selectedDate) return [];
-
-const d = new Date(selectedDate+"T12:00:00");
-const day = d.getDay();
-
-if(day === 0 || day === 6){
-
-return [
-"09:00",
-"10:00",
-"11:00",
-"12:00",
-"13:00",
-"14:00",
-"15:00",
-"16:00",
-"17:00",
-"18:00"
-];
-
-}
-
-return [
-"15:00",
-"16:00",
-"17:00",
-"18:00"
-];
-
-}
+/* Kalendář */
 
 function renderCalendar(){
 
@@ -321,7 +283,7 @@ const today = new Date();
 
 today.setHours(0,0,0,0);
 
-document.getElementById("monthTitle").textContent =
+document.getElementById("month").textContent =
 new Intl.DateTimeFormat("cs-CZ",{
 month:"long",
 year:"numeric"
@@ -362,68 +324,131 @@ document.getElementById("calendar").innerHTML = out;
 
 }
 
+
+/* Výběr dne */
+
 function selectDay(s){
 
 selectedDate = s;
 selectedTime = null;
 
 renderCalendar();
+renderTimes();
 
-document.getElementById("timeArea")
-.classList.remove("hidden");
+}
 
-let d = new Date(s+"T12:00:00");
 
-document.getElementById("selectedDayTitle").textContent =
-"🕒 "+
+/* Dostupné časy */
+
+function getTimes(){
+
+const d = new Date(selectedDate+"T12:00:00");
+
+const day = d.getDay();
+
+let times = [];
+
+if(day >= 1 && day <= 5){
+
+for(let h=15;h<19;h++){
+
+times.push(
+String(h).padStart(2,"0")+":00"
+);
+
+}
+
+}else{
+
+for(let h=9;h<19;h++){
+
+times.push(
+String(h).padStart(2,"0")+":00"
+);
+
+}
+
+}
+
+return times;
+
+}
+
+
+/* Kontrola obsazenosti */
+
+function taken(t){
+
+return bookings.some(b=>{
+
+const bookingDate =
+normalizeBookingDate(b.date);
+
+const bookingTime =
+normalizeBookingTime(b.time);
+
+return bookingDate === selectedDate &&
+bookingTime === t;
+
+});
+
+}
+
+
+/* Zobrazení časů */
+
+function renderTimes(){
+
+if(!selectedDate) return;
+
+const d = new Date(selectedDate+"T12:00:00");
+
+const dayText =
 new Intl.DateTimeFormat("cs-CZ",{
 weekday:"long",
 day:"numeric",
 month:"long"
 }).format(d);
 
-renderTimes();
+document.getElementById("timesBox").innerHTML = `
 
-}
+<h3>🕒 ${dayText}</h3>
 
-function taken(t){
-
-return bookings.some(b =>
-b.date === selectedDate &&
-b.time === t
-);
-
-}
-
-function renderTimes(){
-
-const times = getTimesForDate();
-
-document.getElementById("times").innerHTML =
-times.map(t => {
+${getTimes().map(t=>{
 
 const isTaken = taken(t);
 
 return `
+
 <div
 class="time ${isTaken?"taken":"free"} ${selectedTime===t?"selected":""}"
 ${isTaken ? "" : `onclick="selectTime('${t}')"`}>
+
 ${t} — ${isTaken ? "OBSAZENO" : "volný termín"}
+
 </div>
+
 `;
 
-}).join("");
+}).join("")}
 
-document.getElementById("formArea")
+`;
+
+document.getElementById("form")
 .classList.toggle("hidden",!selectedTime);
 
 }
+
+
+/* Výběr času */
 
 function selectTime(t){
 
 if(taken(t)){
 
 alert("Tento termín je už obsazený.");
+
+loadBookings();
 
 return;
 
@@ -435,16 +460,19 @@ renderTimes();
 
 }
 
-async function order(){
+
+/* Objednávka */
+
+function book(){
 
 const name =
-document.getElementById("customerName").value.trim();
+document.getElementById("name").value.trim();
 
 const phone =
-document.getElementById("customerPhone").value.trim();
+document.getElementById("phone").value.trim();
 
 const address =
-document.getElementById("customerAddress").value.trim();
+document.getElementById("address").value.trim();
 
 const service =
 document.getElementById("service").value;
@@ -465,31 +493,30 @@ return;
 
 }
 
+
+/* Ještě jednou ověříme termín */
+
 if(taken(selectedTime)){
 
 alert("Tento termín je už obsazený.");
 
-await loadBookings();
+loadBookings();
 
 return;
 
 }
 
-const result =
-document.getElementById("result");
+const btn =
+document.querySelector("#form .order");
 
-result.innerHTML =
-'<div class="notice">⏳ Odesílám objednávku...</div>';
+btn.disabled = true;
 
-try{
+btn.textContent = "Odesílám…";
 
-const response = await fetch(
-GOOGLE_SCRIPT_URL,
-{
+fetch(GOOGLE_SCRIPT_URL,{
+
 method:"POST",
-headers:{
-"Content-Type":"text/plain;charset=utf-8"
-},
+
 body:JSON.stringify({
 
 date:selectedDate,
@@ -500,44 +527,58 @@ contact:phone,
 address:address
 
 })
-});
 
-const data = await response.json();
+})
 
-if(data.success){
+.then(r=>r.json())
 
-result.innerHTML =
+.then(result=>{
+
+if(!result.success){
+
+throw new Error(
+result.message || "Termín je už obsazený."
+);
+
+}
+
+document.getElementById("result").innerHTML =
+
 '<div class="notice">✅ Objednávka byla odeslána. Brzy se ozveme.</div>';
 
-document.getElementById("customerName").value="";
-document.getElementById("customerPhone").value="";
-document.getElementById("customerAddress").value="";
+document.getElementById("name").value="";
+document.getElementById("phone").value="";
+document.getElementById("address").value="";
 
-selectedTime=null;
+selectedTime = null;
 
-await loadBookings();
+loadBookings();
 
-renderTimes();
+})
 
-}else{
+.catch(error=>{
 
-result.innerHTML =
-'<div class="notice">❌ '+(data.message || "Objednávku se nepodařilo odeslat.")+'</div>';
+alert(
+error.message ||
+"Objednávku se nepodařilo odeslat."
+);
 
-await loadBookings();
+loadBookings();
+
+})
+
+.finally(()=>{
+
+btn.disabled = false;
+
+btn.textContent = "Objednat termín";
+
+});
 
 }
 
-}catch(error){
 
-console.error(error);
-
-result.innerHTML =
-'<div class="notice">❌ Objednávku se nepodařilo odeslat. Zkus to prosím znovu.</div>';
-
-}
-
-}
+/* Spuštění */
 
 renderCalendar();
 
