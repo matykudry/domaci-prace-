@@ -203,9 +203,7 @@
     <label for="note">Poznámka:</label>
     <textarea id="note" placeholder="Další informace"></textarea>
 
-    <button onclick="reserve()">
-      Rezervovat termín
-    </button>
+    <button onclick="reserve()">Rezervovat termín</button>
 
     <div id="message"></div>
 
@@ -219,7 +217,7 @@
 <script>
 
 const GOOGLE_SCRIPT_URL =
-"https://script.google.com/macros/s/AKfycbwLGZ9jIRFi_iWi2s7b7mEaXQIq-iekW88VX9mEuBdLPjQeAQD_SyaZkiJWz7vcYKZ4lA/exec";
+"https://script.google.com/macros/s/AKfycbxH5V2CThh5yGRaj4bVJ2Z6NGklMvfauMKexcRysCeM-RggnIqyG9WlJ70WyrVo4VIapw/exec";
 
 const timeSelect = document.getElementById("time");
 const dateInput = document.getElementById("date");
@@ -274,9 +272,7 @@ async function reserve() {
   const note = document.getElementById("note").value;
 
   if (!service || !date || !time || !name || !phone || !address) {
-
     alert("Vyplň prosím všechna povinná políčka.");
-
     return;
   }
 
@@ -293,7 +289,6 @@ async function reserve() {
         method: "POST",
 
         body: JSON.stringify({
-
           date: date,
           time: time,
           service: service,
@@ -301,7 +296,6 @@ async function reserve() {
           contact: phone,
           address: address,
           note: note
-
         })
       }
     );
@@ -312,7 +306,6 @@ async function reserve() {
 
       message.innerHTML =
         "✅ Rezervace byla úspěšně odeslána!<br><br>" +
-
         "<b>Práce:</b> " + service + "<br>" +
         "<b>Datum:</b> " + date + "<br>" +
         "<b>Čas:</b> " + time + "<br>" +
