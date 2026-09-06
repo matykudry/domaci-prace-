@@ -213,35 +213,29 @@
 <script>
 
 const GOOGLE_SCRIPT_URL =
-"https://script.google.com/macros/s/AKfycbyw4MQTsK7A0uY-OHqkjq3nBfWdRGRJ5sbW2rI1ObfiHXGwc1AJCiXwfHfFwH_YcWZy/exec";
+"https://script.google.com/macros/s/AKfycby1GvCyeeTgGDBEPZlOpm1fEXBApwGMoWJybTYK4OQIaqQFZf3VOjsBYOFRAwvzi3pm5g/exec";
 
 const timeSelect = document.getElementById("time");
 const dateInput = document.getElementById("date");
 
 let bookedTimes = [];
 
-
 function normalizeDate(value) {
-
   if (!value) return "";
 
   let text = String(value).trim();
 
-  // YYYY-MM-DD
   if (/^\d{4}-\d{2}-\d{2}$/.test(text)) {
     return text;
   }
 
-  // Pokud by Google vrátil datum jako text s časem
   if (text.includes("T")) {
     return text.substring(0, 10);
   }
 
-  // Pokus o převedení běžného data
   const parsed = new Date(text);
 
   if (!isNaN(parsed.getTime())) {
-
     return parsed.getFullYear() + "-" +
       String(parsed.getMonth() + 1).padStart(2, "0") + "-" +
       String(parsed.getDate()).padStart(2, "0");
@@ -250,14 +244,11 @@ function normalizeDate(value) {
   return text;
 }
 
-
 function normalizeTime(value) {
-
   if (!value) return "";
 
   let text = String(value).trim();
 
-  // například 15:00
   if (/^\d{1,2}:\d{2}$/.test(text)) {
     const parts = text.split(":");
 
@@ -265,7 +256,6 @@ function normalizeTime(value) {
       ":" + parts[1];
   }
 
-  // například 15:00:00
   if (/^\d{1,2}:\d{2}:\d{2}$/.test(text)) {
     return text.substring(0, 5);
   }
@@ -273,11 +263,8 @@ function normalizeTime(value) {
   return text;
 }
 
-
 async function loadBookings() {
-
   try {
-
     const response = await fetch(
       GOOGLE_SCRIPT_URL + "?t=" + Date.now()
     );
@@ -289,7 +276,6 @@ async function loadBookings() {
     createTimes();
 
   } catch (error) {
-
     console.error("Chyba při načítání rezervací:", error);
 
     bookedTimes = [];
@@ -297,7 +283,6 @@ async function loadBookings() {
     createTimes();
   }
 }
-
 
 function createTimes() {
 
@@ -314,7 +299,6 @@ function createTimes() {
   let startHour = 15;
   let endHour = 18;
 
-  // Víkend
   if (day === 0 || day === 6) {
     startHour = 9;
     endHour = 18;
@@ -357,7 +341,6 @@ function createTimes() {
     }
   }
 
-  // Pokud už nejsou žádné volné časy
   if (timeSelect.options.length === 1) {
 
     const option =
@@ -372,12 +355,10 @@ function createTimes() {
   }
 }
 
-
 dateInput.addEventListener(
   "change",
   loadBookings
 );
-
 
 async function reserve() {
 
@@ -491,7 +472,6 @@ async function reserve() {
     console.error(error);
   }
 }
-
 
 loadBookings();
 
