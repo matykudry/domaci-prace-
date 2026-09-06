@@ -105,10 +105,6 @@
       font-weight: bold;
     }
 
-    button:hover {
-      background: #1d4ed8;
-    }
-
     #message {
       margin-top: 20px;
       padding: 15px;
@@ -222,11 +218,30 @@ const GOOGLE_SCRIPT_URL =
 const timeSelect = document.getElementById("time");
 const dateInput = document.getElementById("date");
 
+let bookedTimes = [];
+
 const today = new Date();
 const todayString = today.toISOString().split("T")[0];
 
 dateInput.min = todayString;
 
+
+// Načtení obsazených termínů
+async function loadBookings() {
+  try {
+    const response = await fetch(GOOGLE_SCRIPT_URL);
+    bookedTimes = await response.json();
+
+    createTimes();
+
+  } catch (error) {
+    console.error("Nepodařilo se načíst rezervace:", error);
+    createTimes();
+  }
+}
+
+
+// Vytvoření dostupných časů
 function createTimes() {
 
   timeSelect.innerHTML =
@@ -247,20 +262,34 @@ function createTimes() {
 
   for (let hour = startHour; hour < endHour; hour++) {
 
-    const option = document.createElement("option");
-
-    option.value =
+    const time =
       String(hour).padStart(2, "0") + ":00";
 
-    option.textContent =
-      String(hour).padStart(2, "0") + ":00";
+    const isBooked = bookedTimes.some(function(booking) {
+      return String(booking.date).trim() === dateInput.value &&
+             String(booking.time).trim() === time;
+    });
 
-    timeSelect.appendChild(option);
+    if (!isBooked) {
+
+      const option = document.createElement("option");
+
+      option.value = time;
+      option.textContent = time;
+
+      timeSelect.appendChild(option);
+    }
   }
 }
 
-dateInput.addEventListener("change", createTimes);
 
+// Při změně dne znovu načteme rezervace
+dateInput.addEventListener("change", async function() {
+  await loadBookings();
+});
+
+
+// Odeslání rezervace
 async function reserve() {
 
   const service = document.getElementById("service").value;
@@ -279,6 +308,8 @@ async function reserve() {
   const message = document.getElementById("message");
 
   message.style.display = "block";
+  message.style.background = "#dcfce7";
+  message.style.color = "#166534";
   message.innerHTML = "⏳ Odesílám rezervaci...";
 
   try {
@@ -318,16 +349,24 @@ async function reserve() {
       document.getElementById("address").value = "";
       document.getElementById("note").value = "";
 
+      // Aktualizace obsazených termínů
+      await loadBookings();
+
     } else {
 
       message.style.background = "#fee2e2";
       message.style.color = "#991b1b";
+
       message.innerHTML =
         "❌ Tento termín už je obsazený. Vyber prosím jiný čas.";
 
+      await loadBookings();
     }
 
   } catch (error) {
+
+    message.style.background = "#fee2e2";
+    message.style.color = "#991b1b";
 
     message.innerHTML =
       "❌ Nastala chyba při odesílání rezervace.";
@@ -335,6 +374,10 @@ async function reserve() {
     console.error(error);
   }
 }
+
+
+// První načtení
+loadBookings();
 
 </script>
 
