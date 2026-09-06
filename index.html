@@ -1,119 +1,131 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Domácí práce</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Domácí práce</title>
 
-<style>
-* { box-sizing: border-box; }
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f4f7f5;
-  color: #17231b;
-}
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      color: #222;
+    }
 
-header {
-  background: #176b3a;
-  color: white;
-  text-align: center;
-  padding: 45px 20px;
-}
+    header {
+      background: #1f2937;
+      color: white;
+      text-align: center;
+      padding: 35px 20px;
+    }
 
-header h1 {
-  margin: 0 0 10px;
-  font-size: 38px;
-}
+    header h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
 
-.container {
-  max-width: 950px;
-  margin: auto;
-  padding: 25px 15px;
-}
+    header p {
+      font-size: 18px;
+    }
 
-h2 {
-  text-align: center;
-  margin-top: 35px;
-}
+    section {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
 
-.services {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-  gap: 15px;
-}
+    h2 {
+      margin-bottom: 20px;
+      text-align: center;
+    }
 
-.card {
-  background: white;
-  padding: 22px;
-  border-radius: 15px;
-  box-shadow: 0 3px 12px rgba(0,0,0,.08);
-}
+    .services {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+    }
 
-.card h3 {
-  margin-top: 0;
-  color: #176b3a;
-}
+    .service {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+      text-align: center;
+    }
 
-.price {
-  font-size: 20px;
-  font-weight: bold;
-}
+    .service h3 {
+      margin-bottom: 8px;
+    }
 
-.booking {
-  background: white;
-  padding: 25px;
-  border-radius: 15px;
-  margin-top: 30px;
-  box-shadow: 0 3px 12px rgba(0,0,0,.08);
-}
+    .price {
+      font-size: 20px;
+      font-weight: bold;
+      margin-top: 8px;
+    }
 
-label {
-  display: block;
-  margin-top: 15px;
-  font-weight: bold;
-}
+    .booking {
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    }
 
-input, select, textarea, button {
-  width: 100%;
-  padding: 12px;
-  margin-top: 6px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 16px;
-}
+    label {
+      display: block;
+      margin-top: 15px;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
 
-textarea {
-  min-height: 100px;
-}
+    input, select, textarea, button {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
 
-button {
-  margin-top: 20px;
-  background: #176b3a;
-  color: white;
-  border: none;
-  font-weight: bold;
-  cursor: pointer;
-}
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
 
-button:hover {
-  background: #0f512b;
-}
+    button {
+      margin-top: 20px;
+      background: #2563eb;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
 
-.info {
-  margin-top: 15px;
-  padding: 12px;
-  background: #e7f5ec;
-  border-radius: 8px;
-}
+    button:hover {
+      background: #1d4ed8;
+    }
 
-footer {
-  text-align: center;
-  padding: 30px;
-  color: #666;
-}
-</style>
+    #message {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 8px;
+      display: none;
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    footer {
+      margin-top: 40px;
+      padding: 25px;
+      text-align: center;
+      background: #1f2937;
+      color: white;
+    }
+  </style>
 </head>
 
 <body>
@@ -123,133 +135,177 @@ footer {
   <p>Pomoc s prací kolem domu a zahrady</p>
 </header>
 
-<div class="container">
+<section>
+  <h2>Ceník</h2>
 
-<h2>Co nabízím</h2>
+  <div class="services">
 
-<div class="services">
+    <div class="service">
+      <h3>🌱 Sekání trávy</h3>
+      <p class="price">100 Kč / hod</p>
+    </div>
 
-<div class="card">
-<h3>🪟 Mytí oken</h3>
-<p>Pomoc s umytím oken a základním vyčištěním.</p>
-<div class="price">od 100 Kč</div>
-</div>
+    <div class="service">
+      <h3>🪟 Mytí oken</h3>
+      <p class="price">50 Kč / hod</p>
+    </div>
 
-<div class="card">
-<h3>🌱 Sekání zahrady</h3>
-<p>Sekání trávy a základní úklid po práci.</p>
-<div class="price">od 150 Kč</div>
-</div>
+    <div class="service">
+      <h3>🪵 Sekání dřeva</h3>
+      <p class="price">150 Kč / hod</p>
+    </div>
 
-<div class="card">
-<h3>🪵 Práce se dřevem</h3>
-<p>Skládání a rovnání dřeva.</p>
-<div class="price">od 150 Kč</div>
-</div>
+    <div class="service">
+      <h3>🪵 Skládání dřeva</h3>
+      <p class="price">100 Kč / hod</p>
+    </div>
 
-<div class="card">
-<h3>🏡 Další pomoc</h3>
-<p>Po domluvě můžu pomoci i s dalšími jednoduchými pracemi.</p>
-<div class="price">dle domluvy</div>
-</div>
+    <div class="service">
+      <h3>🧹 Zametání</h3>
+      <p class="price">50 Kč / hod</p>
+    </div>
 
-</div>
+  </div>
+</section>
 
-<h2>📅 Rezervace termínu</h2>
+<section>
+  <h2>Rezervace</h2>
 
-<div class="booking">
+  <div class="booking">
 
-<form id="bookingForm">
+    <label for="service">Vyberte práci:</label>
 
-<label for="name">Jméno</label>
-<input type="text" id="name" required>
+    <select id="service">
+      <option value="">-- Vyberte práci --</option>
+      <option>Sekání trávy</option>
+      <option>Mytí oken</option>
+      <option>Sekání dřeva</option>
+      <option>Skládání dřeva</option>
+      <option>Zametání</option>
+    </select>
 
-<label for="contact">Telefon nebo e-mail</label>
-<input type="text" id="contact" required>
 
-<label for="service">Služba</label>
-<select id="service" required>
-<option value="">Vyber službu</option>
-<option>Mytí oken</option>
-<option>Sekání zahrady</option>
-<option>Práce se dřevem</option>
-<option>Jiná práce</option>
-</select>
+    <label for="date">Vyberte den:</label>
 
-<label for="date">Datum</label>
-<input type="date" id="date" required>
+    <input type="date" id="date">
 
-<label for="time">Čas</label>
-<select id="time" required>
-<option value="">Nejdříve vyber datum</option>
-</select>
 
-<label for="message">Poznámka</label>
-<textarea id="message" placeholder="Napiš, co potřebuješ..."></textarea>
+    <label for="time">Vyberte čas:</label>
 
-<button type="submit">Rezervovat termín</button>
+    <select id="time">
+      <option value="">-- Vyberte čas --</option>
+    </select>
 
-</form>
 
-<div class="info">
-<strong>🕐 Dostupné časy:</strong><br>
-Pondělí–pátek: 15:00–18:00<br>
-Sobota–neděle: 9:00–19:00
-</div>
+    <label for="name">Jméno:</label>
 
-</div>
+    <input type="text" id="name" placeholder="Vaše jméno">
 
-</div>
+
+    <label for="phone">Telefon:</label>
+
+    <input type="tel" id="phone" placeholder="Telefonní číslo">
+
+
+    <label for="note">Poznámka:</label>
+
+    <textarea id="note" placeholder="Např. adresa nebo další informace"></textarea>
+
+
+    <button onclick="reserve()">
+      Rezervovat termín
+    </button>
+
+    <div id="message"></div>
+
+  </div>
+</section>
 
 <footer>
-© 2026 Domácí práce
+  Domácí práce • Rychlá a spolehlivá pomoc
 </footer>
+
 
 <script>
 
-const dateInput = document.getElementById("date");
-const timeSelect = document.getElementById("time");
+  const timeSelect = document.getElementById("time");
+  const dateInput = document.getElementById("date");
 
-dateInput.min = new Date().toISOString().split("T")[0];
+  // Dnešní datum
+  const today = new Date();
+  const todayString = today.toISOString().split("T")[0];
 
-dateInput.addEventListener("change", function() {
+  dateInput.min = todayString;
 
-  timeSelect.innerHTML =
-    '<option value="">Vyber čas</option>';
 
-  const date = new Date(this.value + "T12:00:00");
-  const day = date.getDay();
+  // Vytvoření časů
+  function createTimes() {
 
-  let times = [];
+    timeSelect.innerHTML =
+      '<option value="">-- Vyberte čas --</option>';
 
-  if (day >= 1 && day <= 5) {
-    times = ["15:00", "16:00", "17:00", "18:00"];
-  } else {
-    times = [
-      "9:00", "10:00", "11:00", "12:00",
-      "13:00", "14:00", "15:00", "16:00",
-      "17:00", "18:00", "19:00"
-    ];
+    for (let hour = 9; hour <= 18; hour++) {
+
+      if (hour < 18) {
+
+        let option = document.createElement("option");
+
+        option.value =
+          String(hour).padStart(2, "0") + ":00";
+
+        option.textContent =
+          String(hour).padStart(2, "0") + ":00";
+
+        timeSelect.appendChild(option);
+      }
+    }
   }
 
-  times.forEach(function(time) {
-    const option = document.createElement("option");
-    option.value = time;
-    option.textContent = time;
-    timeSelect.appendChild(option);
-  });
+  createTimes();
 
-});
 
-document.getElementById("bookingForm").addEventListener("submit", function(event) {
+  function reserve() {
 
-  event.preventDefault();
+    const service =
+      document.getElementById("service").value;
 
-  alert(
-    "Rezervace byla vyplněna. V dalším kroku ji napojíme na skutečný systém objednávek."
-  );
+    const date =
+      document.getElementById("date").value;
 
-});
+    const time =
+      document.getElementById("time").value;
+
+    const name =
+      document.getElementById("name").value;
+
+    const phone =
+      document.getElementById("phone").value;
+
+    const note =
+      document.getElementById("note").value;
+
+
+    if (!service || !date || !time || !name || !phone) {
+
+      alert("Vyplň prosím všechna povinná políčka.");
+
+      return;
+    }
+
+
+    const message =
+      document.getElementById("message");
+
+    message.style.display = "block";
+
+    message.innerHTML =
+      "✅ Rezervace byla odeslána!<br><br>" +
+      "<b>Práce:</b> " + service + "<br>" +
+      "<b>Datum:</b> " + date + "<br>" +
+      "<b>Čas:</b> " + time + "<br>" +
+      "<b>Jméno:</b> " + name;
+
+  }
 
 </script>
 
