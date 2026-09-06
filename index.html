@@ -1,479 +1,303 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="cs">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Domácí práce</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pomoc kolem domu a zahrady</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#172033}
+.hero{background:linear-gradient(135deg,#087cf0,#1557c0);color:#fff;text-align:center;padding:48px 18px}
+.hero h1{font-size:36px;margin:0 0 10px}
+.container{max-width:900px;margin:auto;padding:16px}
+.card{background:#fff;border-radius:18px;padding:24px;margin:16px 0;box-shadow:0 5px 20px #0001}
+h2{color:#1557c0}
+.price{display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid #eee}
+.price b{color:#087cf0}
+input,select{width:100%;padding:12px;border:1px solid #ccd5e2;border-radius:10px;margin:6px 0 12px;font-size:16px}
+.btn{border:0;border-radius:11px;padding:13px 18px;font-weight:bold;cursor:pointer}
+.order{background:#087cf0;color:#fff;width:100%;margin-top:15px}
+.phone{font-size:24px;font-weight:bold}
+.about{background:#087cf0;color:#fff;width:100%}
+.hidden{display:none}
+.notice{padding:12px;border-radius:10px;background:#fff7d6;margin-top:12px}
 
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
-      color: #222;
-    }
-
-    header {
-      background: #1f2937;
-      color: white;
-      text-align: center;
-      padding: 35px 20px;
-    }
-
-    header h1 {
-      font-size: 36px;
-      margin-bottom: 10px;
-    }
-
-    header p {
-      font-size: 18px;
-    }
-
-    section {
-      max-width: 900px;
-      margin: 30px auto;
-      padding: 0 20px;
-    }
-
-    h2 {
-      margin-bottom: 20px;
-      text-align: center;
-    }
-
-    .services {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 15px;
-    }
-
-    .service {
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-      text-align: center;
-    }
-
-    .service h3 {
-      margin-bottom: 8px;
-    }
-
-    .price {
-      font-size: 20px;
-      font-weight: bold;
-      margin-top: 8px;
-    }
-
-    .booking {
-      background: white;
-      padding: 25px;
-      border-radius: 12px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-    }
-
-    label {
-      display: block;
-      margin-top: 15px;
-      margin-bottom: 6px;
-      font-weight: bold;
-    }
-
-    input, select, textarea, button {
-      width: 100%;
-      padding: 12px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      font-size: 16px;
-    }
-
-    textarea {
-      min-height: 100px;
-      resize: vertical;
-    }
-
-    button {
-      margin-top: 20px;
-      background: #2563eb;
-      color: white;
-      border: none;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    #message {
-      margin-top: 20px;
-      padding: 15px;
-      border-radius: 8px;
-      display: none;
-      background: #dcfce7;
-      color: #166534;
-    }
-
-    footer {
-      margin-top: 40px;
-      padding: 25px;
-      text-align: center;
-      background: #1f2937;
-      color: white;
-    }
-  </style>
+.calendar-head{display:flex;align-items:center;justify-content:space-between;margin:15px 0}
+.month-btn{border:0;background:#087cf0;color:white;border-radius:10px;width:42px;height:38px;font-size:25px;cursor:pointer}
+.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.weekday{text-align:center;font-size:12px;font-weight:bold;color:#6b7585;padding:6px 0}
+.day{min-height:48px;border:1px solid #d7deea;background:white;border-radius:10px;cursor:pointer;font-weight:bold}
+.day.empty{border:0;background:transparent;cursor:default}
+.day.closed{background:#f2f3f5;color:#999;cursor:not-allowed}
+.day.selected{background:#087cf0;color:white;border-color:#087cf0}
+.time{padding:13px;margin:7px 0;border:1px solid #d7deea;border-radius:10px;text-align:center;font-weight:bold}
+.time.free{cursor:pointer}
+.time.selected{background:#087cf0;color:white;border-color:#087cf0}
+.time.taken{background:#eee;color:#888}
+@media(max-width:600px){
+.times{grid-template-columns:repeat(2,1fr)}
+.calendar{gap:4px}
+}
+</style>
 </head>
 
 <body>
 
-<header>
-  <h1>Domácí práce</h1>
-  <p>Pomoc s prací kolem domu a zahrady</p>
-</header>
-
-<section>
-  <h2>Ceník</h2>
-
-  <div class="services">
-
-    <div class="service">
-      <h3>🌱 Sekání trávy</h3>
-      <p class="price">100 Kč / hod</p>
-    </div>
-
-    <div class="service">
-      <h3>🪟 Mytí oken</h3>
-      <p class="price">50 Kč / hod</p>
-    </div>
-
-    <div class="service">
-      <h3>🪵 Sekání dřeva</h3>
-      <p class="price">150 Kč / hod</p>
-    </div>
-
-    <div class="service">
-      <h3>🪵 Skládání dřeva</h3>
-      <p class="price">100 Kč / hod</p>
-    </div>
-
-    <div class="service">
-      <h3>🧹 Zametání</h3>
-      <p class="price">50 Kč / hod</p>
-    </div>
-
-  </div>
+<section class="hero">
+<h1>🏡 Pomoc kolem domu a zahrady</h1>
+<p>Pečlivě, spolehlivě a za příznivé ceny.</p>
 </section>
 
-<section>
-  <h2>Rezervace</h2>
+<main class="container">
 
-  <div class="booking">
-
-    <label for="service">Vyberte práci:</label>
-    <select id="service">
-      <option value="">-- Vyberte práci --</option>
-      <option>Sekání trávy</option>
-      <option>Mytí oken</option>
-      <option>Sekání dřeva</option>
-      <option>Skládání dřeva</option>
-      <option>Zametání</option>
-    </select>
-
-    <label for="date">Vyberte den:</label>
-    <input type="date" id="date">
-
-    <label for="time">Vyberte čas:</label>
-    <select id="time">
-      <option value="">-- Vyberte čas --</option>
-    </select>
-
-    <label for="name">Jméno:</label>
-    <input type="text" id="name" placeholder="Vaše jméno">
-
-    <label for="phone">Telefon:</label>
-    <input type="tel" id="phone" placeholder="Telefonní číslo">
-
-    <label for="address">Adresa:</label>
-    <input type="text" id="address" placeholder="Ulice, číslo, město">
-
-    <label for="note">Poznámka:</label>
-    <textarea id="note" placeholder="Další informace"></textarea>
-
-    <button onclick="reserve()">Rezervovat termín</button>
-
-    <div id="message"></div>
-
-  </div>
+<section class="card">
+<h2>🔨 Ceník</h2>
+<div class="price">🌱 Sekání trávy <b>100 Kč/hodinu</b></div>
+<div class="price">🪟 Mytí oken <b>50 Kč/hodinu</b></div>
+<div class="price">🪵 Sekání dřeva <b>150 Kč/hodinu</b></div>
+<div class="price">🪵 Skládání dřeva <b>100 Kč/hodinu</b></div>
+<div class="price">🌿 Zametání kolem domu <b>50 Kč/hodinu</b></div>
+<div class="price">🔧 Ostatní práce <b>cena dohodou</b></div>
 </section>
 
-<footer>
-  Domácí práce • Rychlá a spolehlivá pomoc
+<section class="card">
+<h2>📅 Objednat termín</h2>
+<p><b>Pondělí–pátek 15:00–19:00.</b></p>
+
+<label>Práce</label>
+<select id="service">
+<option>Sekání trávy</option>
+<option>Mytí oken</option>
+<option>Sekání dřeva</option>
+<option>Skládání dřeva</option>
+<option>Zametání kolem domu</option>
+<option>Ostatní práce</option>
+</select>
+
+<h3 id="monthTitle"></h3>
+<div class="calendar" id="calendar"></div>
+
+<div id="timeArea" class="hidden">
+<h3 id="selectedDayTitle"></h3>
+<div id="times"></div>
+</div>
+
+<div id="formArea" class="hidden">
+<label>Jméno</label>
+<input id="customerName" placeholder="Tvoje jméno">
+
+<label>Telefon</label>
+<input id="customerPhone" placeholder="Telefon">
+
+<button class="btn order" onclick="order()">Objednat termín</button>
+</div>
+
+<div id="result"></div>
+</section>
+
+<section class="card">
+<h2>📍 Lokalita</h2>
+<p>Rájec-Jestřebí a Ráječko.</p>
+</section>
+
+<section class="card">
+<h2>🛠️ Vybavení</h2>
+<p><b>Poznámka:</b> U sekání trávy a zametání je potřebné nářadí možné po předchozí domluvě zapůjčit od zákazníka.</p>
+</section>
+
+<section class="card">
+<h2>📞 Kontakt</h2>
+<p class="phone">
+<a href="tel:737552195">737 552 195</a>
+</p>
+</section>
+
+<button class="btn about" onclick="document.getElementById('about').classList.toggle('hidden')">
+👤 Něco o mně
+</button>
+
+<section id="about" class="card hidden">
+<h2>👤 Něco o mně</h2>
+<p>Jsem <b>14letý student</b>, který si chce přivydělat a zároveň pomoct lidem v okolí.</p>
+<p>Práci dělám <b>pečlivě, spolehlivě a podle domluvy</b>.</p>
+</section>
+
+</main>
+
+<footer style="text-align:center;padding:25px;color:#667">
+© 2026 Pomoc kolem domu a zahrady
 </footer>
 
 <script>
 
-const GOOGLE_SCRIPT_URL =
-"https://script.google.com/macros/s/AKfycby1GvCyeeTgGDBEPZlOpm1fEXBApwGMoWJybTYK4OQIaqQFZf3VOjsBYOFRAwvzi3pm5g/exec";
+let bookings=JSON.parse(localStorage.getItem("testBookings")||"[]");
 
-const timeSelect = document.getElementById("time");
-const dateInput = document.getElementById("date");
+let viewDate=new Date();
+viewDate.setDate(1);
 
-let bookedTimes = [];
+let selectedDate=null;
+let selectedTime=null;
 
-function normalizeDate(value) {
-  if (!value) return "";
+const times=["15:00","16:00","17:00","18:00"];
 
-  let text = String(value).trim();
+const weekdays=["Po","Út","St","Čt","Pá","So","Ne"];
 
-  if (/^\d{4}-\d{2}-\d{2}$/.test(text)) {
-    return text;
-  }
-
-  if (text.includes("T")) {
-    return text.substring(0, 10);
-  }
-
-  const parsed = new Date(text);
-
-  if (!isNaN(parsed.getTime())) {
-    return parsed.getFullYear() + "-" +
-      String(parsed.getMonth() + 1).padStart(2, "0") + "-" +
-      String(parsed.getDate()).padStart(2, "0");
-  }
-
-  return text;
+function iso(d){
+return d.getFullYear()+"-"+
+String(d.getMonth()+1).padStart(2,"0")+"-"+
+String(d.getDate()).padStart(2,"0");
 }
 
-function normalizeTime(value) {
-  if (!value) return "";
+function renderCalendar(){
 
-  let text = String(value).trim();
+const y=viewDate.getFullYear();
+const m=viewDate.getMonth();
+const first=new Date(y,m,1);
 
-  if (/^\d{1,2}:\d{2}$/.test(text)) {
-    const parts = text.split(":");
+const offset=(first.getDay()+6)%7;
+const days=new Date(y,m+1,0).getDate();
 
-    return String(parts[0]).padStart(2, "0") +
-      ":" + parts[1];
-  }
+const today=new Date();
+today.setHours(0,0,0,0);
 
-  if (/^\d{1,2}:\d{2}:\d{2}$/.test(text)) {
-    return text.substring(0, 5);
-  }
+document.getElementById("monthTitle").textContent=
+new Intl.DateTimeFormat("cs-CZ",{
+month:"long",
+year:"numeric"
+}).format(viewDate);
 
-  return text;
+let out=weekdays.map(x=>
+`<div class="weekday">${x}</div>`
+).join("");
+
+for(let i=0;i<offset;i++){
+out+=`<div class="day empty"></div>`;
 }
 
-async function loadBookings() {
-  try {
-    const response = await fetch(
-      GOOGLE_SCRIPT_URL + "?t=" + Date.now()
-    );
+for(let n=1;n<=days;n++){
 
-    const data = await response.json();
+let d=new Date(y,m,n);
+d.setHours(0,0,0,0);
 
-    bookedTimes = Array.isArray(data) ? data : [];
+let s=iso(d);
 
-    createTimes();
+let closed=
+d<today ||
+d.getDay()===0 ||
+d.getDay()===6;
 
-  } catch (error) {
-    console.error("Chyba při načítání rezervací:", error);
-
-    bookedTimes = [];
-
-    createTimes();
-  }
+out+=`
+<button
+class="day ${closed?"closed":""} ${s===selectedDate?"selected":""}"
+${closed?"disabled":""}
+onclick="selectDay('${s}')">
+${n}
+</button>`;
 }
 
-function createTimes() {
-
-  timeSelect.innerHTML =
-    '<option value="">-- Vyberte čas --</option>';
-
-  if (!dateInput.value) return;
-
-  const date =
-    new Date(dateInput.value + "T12:00:00");
-
-  const day = date.getDay();
-
-  let startHour = 15;
-  let endHour = 18;
-
-  if (day === 0 || day === 6) {
-    startHour = 9;
-    endHour = 18;
-  }
-
-  for (
-    let hour = startHour;
-    hour < endHour;
-    hour++
-  ) {
-
-    const time =
-      String(hour).padStart(2, "0") + ":00";
-
-    const alreadyBooked =
-      bookedTimes.some(function(booking) {
-
-        const bookingDate =
-          normalizeDate(booking.date);
-
-        const bookingTime =
-          normalizeTime(booking.time);
-
-        return (
-          bookingDate === dateInput.value &&
-          bookingTime === time
-        );
-
-      });
-
-    if (!alreadyBooked) {
-
-      const option =
-        document.createElement("option");
-
-      option.value = time;
-      option.textContent = time;
-
-      timeSelect.appendChild(option);
-    }
-  }
-
-  if (timeSelect.options.length === 1) {
-
-    const option =
-      document.createElement("option");
-
-    option.textContent =
-      "Tento den je plně obsazený";
-
-    option.disabled = true;
-
-    timeSelect.appendChild(option);
-  }
+document.getElementById("calendar").innerHTML=out;
 }
 
-dateInput.addEventListener(
-  "change",
-  loadBookings
+function selectDay(s){
+
+selectedDate=s;
+selectedTime=null;
+
+renderCalendar();
+
+document.getElementById("timeArea").classList.remove("hidden");
+
+let d=new Date(s+"T12:00:00");
+
+document.getElementById("selectedDayTitle").textContent=
+"🕒 "+
+new Intl.DateTimeFormat("cs-CZ",{
+weekday:"long",
+day:"numeric",
+month:"long"
+}).format(d);
+
+renderTimes();
+}
+
+function taken(t){
+
+return bookings.some(b=>
+b.date===selectedDate &&
+b.time===t &&
+b.status==="accepted"
 );
 
-async function reserve() {
-
-  const service =
-    document.getElementById("service").value;
-
-  const date =
-    document.getElementById("date").value;
-
-  const time =
-    document.getElementById("time").value;
-
-  const name =
-    document.getElementById("name").value;
-
-  const phone =
-    document.getElementById("phone").value;
-
-  const address =
-    document.getElementById("address").value;
-
-  const note =
-    document.getElementById("note").value;
-
-  if (
-    !service ||
-    !date ||
-    !time ||
-    !name ||
-    !phone ||
-    !address
-  ) {
-
-    alert(
-      "Vyplň prosím všechna povinná políčka."
-    );
-
-    return;
-  }
-
-  const message =
-    document.getElementById("message");
-
-  message.style.display = "block";
-  message.style.background = "#dcfce7";
-  message.style.color = "#166534";
-
-  message.innerHTML =
-    "⏳ Odesílám rezervaci...";
-
-  try {
-
-    const response =
-      await fetch(
-        GOOGLE_SCRIPT_URL,
-        {
-          method: "POST",
-          body: JSON.stringify({
-            date: date,
-            time: time,
-            service: service,
-            name: name,
-            contact: phone,
-            address: address,
-            note: note
-          })
-        }
-      );
-
-    const result =
-      await response.json();
-
-    if (result.success) {
-
-      message.innerHTML =
-        "✅ Rezervace byla úspěšně odeslána!<br><br>" +
-        "<b>Práce:</b> " + service + "<br>" +
-        "<b>Datum:</b> " + date + "<br>" +
-        "<b>Čas:</b> " + time;
-
-      document.getElementById("service").value = "";
-      document.getElementById("date").value = "";
-      document.getElementById("time").innerHTML =
-        '<option value="">-- Vyberte čas --</option>';
-      document.getElementById("name").value = "";
-      document.getElementById("phone").value = "";
-      document.getElementById("address").value = "";
-      document.getElementById("note").value = "";
-
-      await loadBookings();
-
-    } else {
-
-      message.style.background = "#fee2e2";
-      message.style.color = "#991b1b";
-
-      message.innerHTML =
-        "❌ Tento termín už je obsazený.";
-
-      await loadBookings();
-    }
-
-  } catch (error) {
-
-    message.style.background = "#fee2e2";
-    message.style.color = "#991b1b";
-
-    message.innerHTML =
-      "❌ Nastala chyba při odesílání rezervace.";
-
-    console.error(error);
-  }
 }
 
-loadBookings();
+function renderTimes(){
+
+document.getElementById("times").innerHTML=
+times.map(t=>`
+
+<div class="time ${taken(t)?"taken":"free"} ${selectedTime===t?"selected":""}"
+${taken(t)?"":"onclick=\"selectTime('"+t+"')\""}>
+${t} — ${taken(t)?"OBSAZENO":"volný termín"}
+</div>
+
+`).join("");
+
+document.getElementById("formArea")
+.classList.toggle("hidden",!selectedTime);
+}
+
+function selectTime(t){
+
+selectedTime=t;
+
+renderTimes();
+}
+
+function order(){
+
+let name=document.getElementById("customerName").value.trim();
+let phone=document.getElementById("customerPhone").value.trim();
+let service=document.getElementById("service").value;
+
+if(!name||!phone){
+
+alert("Vyplň prosím jméno a telefon.");
+return;
+
+}
+
+if(taken(selectedTime)){
+
+alert("Tento termín je už obsazený.");
+return;
+
+}
+
+bookings.push({
+date:selectedDate,
+time:selectedTime,
+name:name,
+phone:phone,
+service:service,
+status:"pending"
+});
+
+localStorage.setItem(
+"testBookings",
+JSON.stringify(bookings)
+);
+
+document.getElementById("result").innerHTML=
+'<div class="notice">✅ Objednávka odeslána. Čeká na potvrzení.</div>';
+
+selectedTime=null;
+
+renderTimes();
+
+}
+
+renderCalendar();
 
 </script>
 
