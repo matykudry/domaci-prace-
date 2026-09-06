@@ -220,28 +220,85 @@ const dateInput = document.getElementById("date");
 
 let bookedTimes = [];
 
-const today = new Date();
-const todayString = today.toISOString().split("T")[0];
 
-dateInput.min = todayString;
+function normalizeDate(value) {
+
+  if (!value) return "";
+
+  let text = String(value).trim();
+
+  // YYYY-MM-DD
+  if (/^\d{4}-\d{2}-\d{2}$/.test(text)) {
+    return text;
+  }
+
+  // Pokud by Google vrátil datum jako text s časem
+  if (text.includes("T")) {
+    return text.substring(0, 10);
+  }
+
+  // Pokus o převedení běžného data
+  const parsed = new Date(text);
+
+  if (!isNaN(parsed.getTime())) {
+
+    return parsed.getFullYear() + "-" +
+      String(parsed.getMonth() + 1).padStart(2, "0") + "-" +
+      String(parsed.getDate()).padStart(2, "0");
+  }
+
+  return text;
+}
 
 
-// Načtení obsazených termínů
+function normalizeTime(value) {
+
+  if (!value) return "";
+
+  let text = String(value).trim();
+
+  // například 15:00
+  if (/^\d{1,2}:\d{2}$/.test(text)) {
+    const parts = text.split(":");
+
+    return String(parts[0]).padStart(2, "0") +
+      ":" + parts[1];
+  }
+
+  // například 15:00:00
+  if (/^\d{1,2}:\d{2}:\d{2}$/.test(text)) {
+    return text.substring(0, 5);
+  }
+
+  return text;
+}
+
+
 async function loadBookings() {
+
   try {
-    const response = await fetch(GOOGLE_SCRIPT_URL);
-    bookedTimes = await response.json();
+
+    const response = await fetch(
+      GOOGLE_SCRIPT_URL + "?t=" + Date.now()
+    );
+
+    const data = await response.json();
+
+    bookedTimes = Array.isArray(data) ? data : [];
 
     createTimes();
 
   } catch (error) {
-    console.error("Nepodařilo se načíst rezervace:", error);
+
+    console.error("Chyba při načítání rezervací:", error);
+
+    bookedTimes = [];
+
     createTimes();
   }
 }
 
 
-// Vytvoření dostupných časů
 function createTimes() {
 
   timeSelect.innerHTML =
@@ -249,30 +306,49 @@ function createTimes() {
 
   if (!dateInput.value) return;
 
-  const date = new Date(dateInput.value + "T12:00:00");
+  const date =
+    new Date(dateInput.value + "T12:00:00");
+
   const day = date.getDay();
 
   let startHour = 15;
   let endHour = 18;
 
+  // Víkend
   if (day === 0 || day === 6) {
     startHour = 9;
     endHour = 18;
   }
 
-  for (let hour = startHour; hour < endHour; hour++) {
+  for (
+    let hour = startHour;
+    hour < endHour;
+    hour++
+  ) {
 
     const time =
       String(hour).padStart(2, "0") + ":00";
 
-    const isBooked = bookedTimes.some(function(booking) {
-      return String(booking.date).trim() === dateInput.value &&
-             String(booking.time).trim() === time;
-    });
+    const alreadyBooked =
+      bookedTimes.some(function(booking) {
 
-    if (!isBooked) {
+        const bookingDate =
+          normalizeDate(booking.date);
 
-      const option = document.createElement("option");
+        const bookingTime =
+          normalizeTime(booking.time);
+
+        return (
+          bookingDate === dateInput.value &&
+          bookingTime === time
+        );
+
+      });
+
+    if (!alreadyBooked) {
+
+      const option =
+        document.createElement("option");
 
       option.value = time;
       option.textContent = time;
@@ -280,57 +356,99 @@ function createTimes() {
       timeSelect.appendChild(option);
     }
   }
+
+  // Pokud už nejsou žádné volné časy
+  if (timeSelect.options.length === 1) {
+
+    const option =
+      document.createElement("option");
+
+    option.textContent =
+      "Tento den je plně obsazený";
+
+    option.disabled = true;
+
+    timeSelect.appendChild(option);
+  }
 }
 
 
-// Při změně dne znovu načteme rezervace
-dateInput.addEventListener("change", async function() {
-  await loadBookings();
-});
+dateInput.addEventListener(
+  "change",
+  loadBookings
+);
 
 
-// Odeslání rezervace
 async function reserve() {
 
-  const service = document.getElementById("service").value;
-  const date = document.getElementById("date").value;
-  const time = document.getElementById("time").value;
-  const name = document.getElementById("name").value;
-  const phone = document.getElementById("phone").value;
-  const address = document.getElementById("address").value;
-  const note = document.getElementById("note").value;
+  const service =
+    document.getElementById("service").value;
 
-  if (!service || !date || !time || !name || !phone || !address) {
-    alert("Vyplň prosím všechna povinná políčka.");
+  const date =
+    document.getElementById("date").value;
+
+  const time =
+    document.getElementById("time").value;
+
+  const name =
+    document.getElementById("name").value;
+
+  const phone =
+    document.getElementById("phone").value;
+
+  const address =
+    document.getElementById("address").value;
+
+  const note =
+    document.getElementById("note").value;
+
+  if (
+    !service ||
+    !date ||
+    !time ||
+    !name ||
+    !phone ||
+    !address
+  ) {
+
+    alert(
+      "Vyplň prosím všechna povinná políčka."
+    );
+
     return;
   }
 
-  const message = document.getElementById("message");
+  const message =
+    document.getElementById("message");
 
   message.style.display = "block";
   message.style.background = "#dcfce7";
   message.style.color = "#166534";
-  message.innerHTML = "⏳ Odesílám rezervaci...";
+
+  message.innerHTML =
+    "⏳ Odesílám rezervaci...";
 
   try {
 
-    const response = await fetch(
-      GOOGLE_SCRIPT_URL,
-      {
-        method: "POST",
-        body: JSON.stringify({
-          date: date,
-          time: time,
-          service: service,
-          name: name,
-          contact: phone,
-          address: address,
-          note: note
-        })
-      }
-    );
+    const response =
+      await fetch(
+        GOOGLE_SCRIPT_URL,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            date: date,
+            time: time,
+            service: service,
+            name: name,
+            contact: phone,
+            address: address,
+            note: note
+          })
+        }
+      );
 
-    const result = await response.json();
+    const result =
+      await response.json();
 
     if (result.success) {
 
@@ -349,7 +467,6 @@ async function reserve() {
       document.getElementById("address").value = "";
       document.getElementById("note").value = "";
 
-      // Aktualizace obsazených termínů
       await loadBookings();
 
     } else {
@@ -358,7 +475,7 @@ async function reserve() {
       message.style.color = "#991b1b";
 
       message.innerHTML =
-        "❌ Tento termín už je obsazený. Vyber prosím jiný čas.";
+        "❌ Tento termín už je obsazený.";
 
       await loadBookings();
     }
@@ -376,7 +493,6 @@ async function reserve() {
 }
 
 
-// První načtení
 loadBookings();
 
 </script>
